@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    border: solid #d2d2d2 1px;
+    width: 500px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: whitesmoke;
+}
+
+body {
+    background: linear-gradient(to right, #393942, #33333a, #2d2d32, #27272a, #212123, #202022, #1f1f20, #1e1e1f, #212123, #252527, #28282c, #2c2c30);
+}
+
+a.blue-link {
+    color: #1f38cd;
+    text-decoration: none;
+}
+
+a.blue-link:visited {
+    color: #1f38cd;
+}
+
+
+h1 {
+    font-family: "Leelawadee", serif;
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+button {
+    background-color: #1f38cd;
+    color: azure;
+    font-family: 'PT Bold Stars', sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 8px;
+
+    width: 250px;
+    padding: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+
+    margin: 5px auto 20px;
+}
+
+
+#username {
+    background-color: white;
+    padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+
+    width: 250px;
+}
+
+#username::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+}
+
+#password {
+    background-color: white;
+    padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+
+    width: 250px;
+
+}
+
+#password::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+}
+
+#login-container {
+    margin-bottom: 20px;
+    margin-top: 150px;
+
+    height: 300px;
+
+}
+
+.input-field {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+
+.input-group {
+    margin: auto;
+}
+
+#create-account-container {
+    margin-left: auto;
+    margin-right: auto;
+
+}

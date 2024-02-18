@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <style>
+
+    .update-form {
+      position: absolute;
+      left: 32%;
+      top: 12%;
+      width: 800px;
+      height: 500px;
+      background-color: #ffffff;
+      padding: 15px;
+      box-shadow: 0 0 32px rgba(0,0,0,0.5);
+      border: 1px solid rgba(184, 184, 184, 0.77);
+
+    }
+
+    .submission {
+      position: absolute;
+      margin-top: 20px;
+      left: 26%;
+      bottom: 22%;
+    }
+
+    .error {
+      position: relative;
+      left: 5%;
+    }
+
+    .button {
+      background-color: #1f38cd;
+      color: azure;
+      font-family: 'PT Bold Stars', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 4px;
+
+      width: 400px;
+      padding: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+
+      margin: 5px auto 20px;
+
+      position: absolute;
+    }
+    .form-header {
+      font-family: Leelawadee, sans-serif;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+    }
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 10px;
+      justify-content: center;
+      position: relative;
+    }
+
+    input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 725px;
+      height: 25px;
+      border-radius: 2px;
+      padding: 3px;
+      border: 1px solid #aaaaaa;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    label, input {
+      position: relative;
+      left: 5%
+    }
+
+    label {
+      font-size: 17px;
+      font-weight: 530;
+      font-family: "Arial", sans-serif;
+      padding: 5px;
+    }
+
+    #partid-field {
+      display: none;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <form class="update-form" action="http://localhost:8081/update" method="POST" name="updatePartsForm">
+    <div class="form-header">
+      <h1>Update Part</h1>
+    </div>
+
+    <div class="container">
+      <div class="fields">
+
+        <div class="input-field" id="partid-field">
+          <input type="hidden" id="partID" name="partid" th:value="${componentObj.partid}" autocomplete="off">
+        </div>
+
+        <div class="input-field" id="partDes-field">
+          <label for="inputPartDes" class="input-label">Part Description</label>
+          <input type="input" id="inputPartDes" name="partdes" th:value="${componentObj.partdes}" autocomplete="off">
+          <div class="error"></div>
+        </div>
+
+        <div class="input-field" id="partPrice-field">
+          <label for="inputPartPrice" class="input-label">Price ($)</label>
+          <input type="input" id="inputPartPrice" name="price" th:value="${componentObj.price}" autocomplete="off">
+          <div class="error"></div>
+        </div>
+
+        <div class="input-field" id="partCategory-field">
+          <label for="inputPartCategory" class="input-label">Category</label>
+          <input type="input" id="inputPartCategory" name="category" th:value="${componentObj.category}" autocomplete="off">
+          <div class="error"></div>
+        </div>
+
+        <div class="submission">
+          <button class="button" id="save-changes-button" type="submit">Save Changes</button>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+
+  <script>
+
+    const updateForm = document.querySelector(".update-form");
+
+    updateForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      validateInputs();
+    });
+
+
+    function setError(element, errorMessage) {
+      const parent = element.parentElement;
+      const errorDiv = parent.querySelector('.error');
+
+      errorDiv.textContent = errorMessage;
+      errorDiv.style.color = "#f73d39";
+      element.style.borderColor = "#f73d39";
+      errorDiv.style.padding = "2px";
+
+    }
+
+
+    function setSuccess(element) {
+      const parent = element.parentElement;
+      const errorDiv = parent.querySelector('.error');
+
+      errorDiv.textContent = '';
+      element.style.borderColor = "#198754";
+      element.style.borderWidth = "3px";
+    }
+    const partDesField = document.querySelector("#inputPartDes");
+    const priceField = document.querySelector("#inputPartPrice");
+    const categoryField = document.querySelector("#inputPartCategory");
+    function validateInputs() {
+      let successCount = 0;
+      const regex = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+
+      let partValue = partDesField.value.trim();
+      let priceValue = priceField.value.trim();
+      let categoryValue = categoryField.value.trim();
+
+      if(partValue === '')
+      {
+        setError(partDesField, "You must enter a part description.");
+      }
+      else
+      {
+        setSuccess(partDesField);
+        successCount++;
+      }
+      if(priceValue === '')
+      {
+        setError(priceField, "You must enter a price.");
+      }
+      else if(!regex.test(priceValue))
+      {
+        setError(priceField, "Enter a valid price.");
+      }
+      else
+      {
+        setSuccess(priceField);
+        successCount++;
+      }
+      if(categoryValue === '')
+      {
+        setError(categoryField, "You must enter a category.");
+      }
+      else
+      {
+        setSuccess(categoryField);
+        successCount++;
+      }
+
+      if(successCount === 3)
+      {
+        console.log("successful submission to server");
+        const fd = new FormData(updateForm);
+        fetch('http://localhost:8081/update', { method: 'POST', body: fd });
+
+        // const regex = /categoryname=/;
+        // if(regex.test(document.referrer))
+        // {
+        //   setTimeout(() => {
+        //     window.location.href = document.referrer;
+        //   }, 200);
+        // }
+
+        // else
+        // {
+        //   setTimeout(() => {
+        //     window.location.href = "http://localhost:8081/";
+        //   }, 200);
+        // }
+
+        setTimeout(() => {
+          window.location.href = document.referrer;
+        }, 200);
+
+      }
+      return successCount;
+    }
+
+
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

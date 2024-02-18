@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <style>
+
+    table {
+      border-collapse: collapse;
+      margin-bottom: 200px;
+      position: relative;
+      left: 14.8%;
+      top: 145px;
+      z-index: 1;
+    }
+
+    th, td {
+      border: 1px solid #262525;
+      padding: 17px;
+      font-family: "Calisto MT", sans-serif;
+    }
+
+    th {
+      padding-right: 100px;
+      background-color: #1f1e1e;
+      color: white;
+      font-family: "Leelawadee", serif;
+      font-size: 20px;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #e2e2e2;
+    }
+
+    a {
+      color: blue;
+    }
+
+    .add-new-component-button {
+      padding-bottom: 20px;
+      margin-top: 25px;
+      margin-left: 25px;
+    }
+    .add-svg {
+      position: fixed;
+      margin-top: 30px;
+      left: 95%;
+      top: 4.1%;
+      cursor: pointer;
+    }
+
+    .fixed-sidebar {
+      position: fixed;
+      border: 1px solid black;
+      background-color: #E9E9E9AA;
+      display: flex;
+      left: 93%;
+      height: 100%;
+      width: 500px;
+      top: 0;
+    }
+
+    .insert-form {
+      position: fixed;
+      left: -800px;
+      width: 650px;
+      background-color: #ffffff;
+      padding: 15px;
+      box-shadow: 0 0 32px rgba(0,0,0,0.5);
+      border: 1px solid #8d8d8d;
+
+    }
+
+    .button {
+      background-color: #1f38cd;
+      color: azure;
+      font-family: 'PT Bold Stars', sans-serif;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 4px;
+
+      width: 250px;
+      padding: 3px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+
+      margin: 5px auto 20px;
+
+      position: relative;
+    }
+    .form-header {
+      font-family: Leelawadee, sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 10px;
+      justify-content: center;
+      position: relative;
+    }
+    .error {
+      position: relative;
+      left: 5%;
+    }
+    .submission {
+      /*display: flex;*/
+      position: relative;
+      margin-top: 20px;
+      left: 30%;
+      /*justify-content: center;*/
+    }
+    input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 550px;
+      height: 25px;
+      border-radius: 2px;
+      border: solid black 1px;
+    }
+    label, input {
+      position: relative;
+      left: 5%
+    }
+    label {
+      padding: 5px;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 16px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .actions-button {
+      display: inline-block;
+      padding-right: 10px;
+    }
+
+    #actions-col {
+      padding-right: 45px;
+    }
+
+    #update-button {
+      background-color: #0e52ce;
+    }
+
+    #delete-button {
+      background-color: red;
+    }
+
+    .action {
+      padding: 6px;
+      font-family: 'PT Bold Stars', sans-serif;
+      font-size: 17px;
+      border-radius: 4px;
+      width: 90px;
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+
+    .drop-button {
+      background-color: #e9e9e9;
+      color: black;
+      padding-left: 20px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      font-size: 16px;
+      width: 100px;
+      cursor: pointer;
+      border: 1px solid black;
+      line-height: 30px;
+    }
+
+    .dropdown-subcontent a {
+      text-decoration: none;
+      color: black;
+    }
+
+    #sortby-caret {
+      position: absolute;
+      left: 77%;
+      top: 32%;
+    }
+
+    .price-caret {
+      position: relative;
+      left: 6%;
+      top: 10%;
+    }
+
+    .category-caret {
+      position: relative;
+      left: 3%;
+    }
+
+    .dropdown {
+      position: absolute;
+      display: inline-block;
+      left: 6.2%;
+      top: 17.3%;
+      user-select: none;
+    }
+
+    .dropdown-item {
+      font-size: 20px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(74, 73, 73, 0.91);
+      z-index: 999;
+    }
+
+
+    .dropdown-content .dropdown-item {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /*.dropdown-content .dropdown-item:hover {*/
+    /*  background-color: #f1f1f1;*/
+    /*} */
+
+    /*.dropdown:hover .dropdown-content {*/
+    /*  display: block;*/
+    /*}*/
+
+    .dropdown-subcontent {
+      display: none;
+      line-height: 55px;
+    }
+
+    /*.dropdown-item:hover .dropdown-subcontent {*/
+    /*  display: block;*/
+    /*}*/
+
+
+    .sub-item {
+      font-size: 16px;
+      display: block;
+      cursor: pointer;
+    }
+
+    /*#category-dropdown-item:hover{*/
+    /*  min-height: 400px;*/
+    /*  min-width: 500px;*/
+    /*}*/
+
+    .dropdown-item-title {
+      font-weight: bold;
+    }
+
+    #sortby-title {
+      font-size: 20px;
+    }
+
+    .default-item {
+      text-decoration: none;
+      color: black;
+    }
+
+    .sidebar {
+      position: fixed;
+      background-color: #eaeaea;
+      left: -400px;
+      top: 0;
+      border: 1px solid #202020;
+      transition-duration: 0.35s;
+      z-index: 999;
+    }
+
+    .enlarge-siderbar {
+      left: 60px;
+      position: absolute;
+      top: 10px;
+      transition-duration: 0.3s;
+      cursor: pointer;
+    }
+
+    header {
+      font-size: 27px;
+      background-color: #232F3E;
+      color: white;
+      font-family: Verdana, sans-serif;
+      text-align: center;
+      line-height: 50px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid white;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+
+    li {
+      margin-bottom: 13px;
+      margin-left: 0;
+      border-bottom: 1px solid black;
+      padding-left: 13px;
+      padding-bottom: 3px;
+      padding-top: 3px;
+    }
+
+    a {
+      color: #111111;
+      font-size: 17px;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+
+    svg {
+      padding-right: 10px;
+    }
+
+    .page-title {
+      position: absolute;
+      left: 43%;
+      top: 10%;
+      font-family: Leelawadee, sans-serif;
+      font-size: 30px;
+      font-weight: bolder;
+    }
+
+    /*#category-input-caret {*/
+    /*    position: absolute;*/
+    /*    top: 47.85%;*/
+    /*    left: 87.75%;*/
+    /*}*/
+
+    .total-price-indicator {
+      position: fixed;
+      display: flex;
+      align-items: center;
+      max-width: 500px;
+      max-height: 50px;
+      margin-top: 25px;
+      right: 7.4%;
+    }
+    #total-price-header {
+      font-size: 28px;
+      font-family: Monospaced, sans-serif;
+      margin-right: 20px;
+      font-weight: bold;
+    }
+
+    #current-total {
+      font-weight: bold;
+      font-family: Monospaced, sans-serif;
+      font-size: 28px;
+    }
+
+
+  </style>
+
+  <style>
+    @media screen and (min-width: 2000px) {
+      .add-svg {
+        position: fixed;
+        margin-top: 30px;
+        left: 95%;
+        top: 2.9%;
+      }
+      table {
+        border-collapse: collapse;
+        margin-bottom: 400px;
+        position: relative;
+        left: 28%;
+        top: 180px;
+      }
+
+      .dropdown {
+        position: absolute;
+        left: 16%;
+        top: 16.4%;
+      }
+
+      .page-title {
+        top: 10.2%;
+        left: 46.4%;
+      }
+
+      .total-price-indicator {
+        right: 12%;
+      }
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div class="page-title">All Parts (A-Z)</div>
+
+<div class="total-price-indicator">
+  <h1 id="total-price-header">Grand Total:</h1>
+  <p th:text="'$' + ${#numbers.formatDecimal(totalPrice, 0, 'DEFAULT', 2, 'POINT')}" id="current-total"></p>
+</div>
+
+<div class="dropdown">
+  <div class="drop-button"><span class="dropdown-item-title" id="sortby-title">Sort By</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="sortby-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></div>
+
+  <div class="dropdown-content">
+
+    <div class="dropdown-item"> <span class="dropdown-item-title"><a th:href="@{/}" class="default-item">Default</a></span>
+      <div class="dropdown-subcontent">
+      </div>
+    </div>
+
+    <div class="dropdown-item"> <span class="dropdown-item-title"><a th:href="@{/sortAllPartsAlphabetically}" class="default-item">Part (A-Z)</a></span>
+      <div class="dropdown-subcontent">
+      </div>
+    </div>
+
+
+    <div class="dropdown-item" id="price-dropdown-item"> <span class="dropdown-item-title" >Price</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="price-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+      <div class="dropdown-subcontent" id="price-sub-content">
+        <a th:href="@{/sortPrice?sort={sorted}(sorted=lowestToHighest)}" class="sub-item">Lowest to Highest</a>
+        <a th:href="@{/sortPrice?sort={sorted}(sorted=highestToLowest)}" class="sub-item">Highest to Lowest</a>
+      </div>
+    </div>
+
+    <div class="dropdown-item" id="category-dropdown-item"> <span class="dropdown-item-title">Category</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="category-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+      <div class="dropdown-subcontent" id="category-sub-content">
+        <a th:each="category: ${categories}" th:text="${category}" class="sub-item" th:href="@{/category?categoryname={categoryName}(categoryName=${category})}"></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" class="enlarge-siderbar" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+<div class="sidebar">
+  <header>Dashboard</header>
+  <div class="sidebar-content">
+    <ul>
+      <li><a href="http://localhost:8081/"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-slash-minus" viewBox="0 0 16 16"><path d="m1.854 14.854 13-13a.5.5 0 0 0-.708-.708l-13 13a.5.5 0 0 0 .708.708ZM4 1a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 4 1Zm5 11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5A.5.5 0 0 1 9 12Z"/></svg>Insert, Delete, and Update</a></li>
+      <li><a href="http://localhost:63342/FormService.java/index.html"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-clipboard2-plus" viewBox="0 0 16 16"><path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/><path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/><path d="M8.5 6.5a.5.5 0 0 0-1 0V8H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V9H10a.5.5 0 0 0 0-1H8.5V6.5Z"/></svg>Copy and Paste</a></li>
+      <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/></svg>Overview</a></li>
+      <li><a href="http://localhost:8081/statistics"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16"><path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/></svg>Statistics</a></li>
+      <li><a href="http://localhost:63342/Excel3/home.html?_ijt=fobc4bjseusm25s452cq0p4e8t&_ij_reload=RELOAD_ON_SAVE"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16"><path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/></svg>Home</a></li>
+    </ul>
+  </div>
+</div>
+
+<form class="insert-form" action="http://localhost:8081/insert" method="POST" name="insertPartsForm">
+  <div class="form-header">
+    <h1>Add a New Part</h1>
+  </div>
+
+  <div class="close-form">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="close-button" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/></svg>
+  </div>
+
+  <div class="container">
+    <div class="fields">
+
+      <div class="input-field" id="partDes-field">
+        <label for="inputPartDes" class="input-label">Part Description</label>
+        <input type="input" id="inputPartDes" name="partdes" autocomplete="off">
+        <div class="error"></div>
+      </div>
+
+      <div class="input-field" id="partPrice-field">
+        <label for="inputPartPrice" class="input-label">Price ($)</label>
+        <input type="input" id="inputPartPrice" name="price" autocomplete="off">
+        <div class="error"></div>
+      </div>
+
+      <div class="input-field" id="partCategory-field">
+        <label for="inputPartCategory" class="input-label">Category</label>
+        <input list="input-Categories" id="inputPartCategory" name="category" autocomplete="off">
+
+        <datalist id="input-Categories">
+          <option th:each="cat: ${categories}" th:value="${cat}"></option>
+        </datalist>
+
+        <div class="error"></div>
+      </div>
+
+      <div class="submission">
+        <button class="button" type="submit">Add Part</button>
+      </div>
+
+    </div>
+
+  </div>
+</form>
+
+<div class="fixed-sidebar">
+  <div class="add-new-component-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="blue" class="add-svg" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/></svg>
+  </div>
+</div>
+
+<div class="table-container">
+
+</div>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Part Description</th>
+    <th>Price ($)</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr th:each="comp: ${sortedComponentsAlphabetically}">
+    <td th:text="${comp.partdes}">
+    <td th:text="'$ ' + ${#numbers.formatDecimal(comp.price, 0, 'DEFAULT', 2, 'POINT')}" ></td>
+
+    <td id="actions-col">
+      <div class="actions-buttons-fields">
+
+        <div class="actions-button">
+          <a th:href="@{/edit?partid={partId}(partId=${comp.partid})}">
+            <button class="action" type="button" id="update-button">Update</button>
+          </a>
+        </div>
+
+        <div class="actions-button">
+          <a th:href="@{/delete?partid={partId}(partId=${comp.partid})}">
+            <button class="action" type="button" id="delete-button">Delete</button>
+          </a>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<script>
+  const addSPartIcon = document.querySelector(".add-new-component-button");
+  const closeButton = document.querySelector(".close-button");
+  let inView = false;
+
+  const insertForm = document.querySelector(".insert-form");
+
+  addSPartIcon.addEventListener('click', () => {
+    if(!inView)
+    {
+      insertForm.style.left = "32%";
+      insertForm.style.top = "30%";
+      insertForm.style.zIndex = "2";
+      insertForm.style.position = "fixed";
+      inView = true;
+    }
+  });
+
+  closeButton.addEventListener('click', () => {
+    if(inView)
+    {
+      insertForm.style.left = "-800px";
+      inView = false;
+      document.insertPartsForm.reset();
+      resetFields();
+    }
+  });
+
+  function resetFields() {
+    partDesField.style.borderColor = "initial";
+    priceField.style.borderColor = "initial";
+    categoryField.style.borderColor = "initial";
+    const errorDivs = document.querySelectorAll('.error');
+
+    for(let i = 0; i < errorDivs.length; i++)
+    {
+      let errDiv = errorDivs[i];
+      errDiv.textContent = '';
+    }
+  }
+
+
+  insertForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if(validateInputs() === 3)
+    {
+      setTimeout(() => {
+        location.reload();
+      }, 200)
+    }
+  });
+
+
+  function setError(element, errorMessage) {
+    const parent = element.parentElement;
+    const errorDiv = parent.querySelector('.error');
+
+    errorDiv.textContent = errorMessage;
+    errorDiv.style.color = "#f73d39";
+    element.style.borderColor = "#f73d39";
+    errorDiv.style.padding = "2px";
+
+  }
+
+
+  function setSuccess(element) {
+    const parent = element.parentElement;
+    const errorDiv = parent.querySelector('.error');
+
+    errorDiv.textContent = '';
+    element.style.borderColor = "#198754";
+    element.style.borderWidth = "3px";
+  }
+  const partDesField = document.querySelector("#inputPartDes");
+  const priceField = document.querySelector("#inputPartPrice");
+  const categoryField = document.querySelector("#inputPartCategory");
+  function validateInputs() {
+    let successCount = 0;
+    const regex = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+
+    let partValue = partDesField.value.trim();
+    let priceValue = priceField.value.trim();
+    let categoryValue = categoryField.value.trim();
+
+    if(partValue === '')
+    {
+      setError(partDesField, "You must enter a part description.");
+    }
+    else
+    {
+      setSuccess(partDesField);
+      successCount++;
+    }
+    if(priceValue === '')
+    {
+      setError(priceField, "You must enter a price.");
+    }
+    else if(!regex.test(priceValue))
+    {
+      setError(priceField, "Enter a valid price.");
+    }
+    else
+    {
+      setSuccess(priceField);
+      successCount++;
+    }
+    if(categoryValue === '')
+    {
+      setError(categoryField, "You must enter a category.");
+    }
+    else
+    {
+      setSuccess(categoryField);
+      successCount++;
+    }
+    if(successCount === 3)
+    {
+      console.log("successful submission to server");
+      const fd = new FormData(insertForm);
+      console.log(priceValue);
+      fetch('http://localhost:8081/insert', { method: 'POST', body: fd });
+
+    }
+    return successCount;
+  }
+
+  const sideBarIcon = document.querySelector('.enlarge-siderbar');
+  const sideBar = document.querySelector('.sidebar');
+  let isVisible = false;
+
+  sideBarIcon.addEventListener('click', () => {
+
+    if(!isVisible)
+    {
+      sideBar.style.width = "300px";
+      sideBar.style.height = "100%";
+      sideBar.style.display = "block";
+      sideBar.style.left = "0";
+      sideBarIcon.style.left = sideBar.offsetWidth + "px";
+
+      isVisible = true;
+    }
+    else
+    {
+      sideBar.style.left = "-500px";
+      sideBarIcon.style.left = "60px";
+
+      isVisible = false;
+    }
+
+  });
+
+  document.addEventListener("DOMContentLoaded", function(event) {
+    let scrollpos = localStorage.getItem('scrollpos');
+    if (scrollpos) window.scrollTo(0, scrollpos);
+  });
+
+  window.onbeforeunload = function(e) {
+    localStorage.setItem('scrollpos', window.scrollY);
+  };
+
+  const dropdown = document.querySelector(".drop-button");
+  const dropdownContent = document.querySelector(".dropdown-content");
+  const categoryDropdown = document.querySelector("#category-dropdown-item");
+  const categorySubcontent = document.querySelector("#category-sub-content");
+  const priceDropdown = document.querySelector("#price-dropdown-item");
+  const priceSubcontent = document.querySelector("#price-sub-content");
+
+  let isDropdownVisible = false;
+  let isPriceDropdownVisible = false;
+  let isCategoryDropdownVisible = false;
+
+  dropdown.addEventListener("click", () => {
+
+    if(isDropdownVisible)
+    {
+      dropdownContent.style.display = "none";
+      priceSubcontent.style.display = "none";
+      categorySubcontent.style.display = "none";
+      categoryDropdown.style.minHeight = "0px";
+      categoryDropdown.style.minWidth = "0px";
+
+      isDropdownVisible = false;
+      isPriceDropdownVisible = false;
+      isCategoryDropdownVisible = false;
+    }
+
+    else
+    {
+      isDropdownVisible = true;
+      dropdownContent.style.display = "block";
+    }
+
+  });
+
+
+  priceDropdown.addEventListener('click', () => {
+
+    if(isPriceDropdownVisible)
+    {
+      priceSubcontent.style.display = "none";
+      isPriceDropdownVisible = false;
+    }
+    else
+    {
+      priceSubcontent.style.display = "block";
+      isPriceDropdownVisible = true;
+    }
+
+  });
+
+  categoryDropdown.addEventListener("click", () => {
+
+    if(isCategoryDropdownVisible)
+    {
+      categorySubcontent.style.display = "none";
+      categoryDropdown.style.minHeight = "0px";
+      categoryDropdown.style.minWidth = "0px";
+      isCategoryDropdownVisible = false;
+    }
+
+    else
+    {
+      categoryDropdown.style.minHeight = "400px";
+      categoryDropdown.style.minWidth = "500px";
+      categorySubcontent.style.display = "block";
+
+      isCategoryDropdownVisible = true;
+    }
+
+
+  });
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

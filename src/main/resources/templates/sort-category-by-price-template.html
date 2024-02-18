@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+        table {
+            border-collapse: collapse;
+            margin-bottom: 200px;
+            position: relative;
+            left: 17.5%;
+            top: 145px;
+            z-index: 1;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 17px;
+            font-family: "Calisto MT", sans-serif;
+        }
+
+        th {
+            padding-right: 100px;
+            background-color: #1f1e1e;
+            color: white;
+            font-family: "Leelawadee", serif;
+            font-size: 20px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #e2e2e2;
+        }
+
+        a {
+            color: blue;
+        }
+
+        .add-new-component-button {
+            padding-bottom: 20px;
+            margin-top: 25px;
+            margin-left: 25px;
+        }
+        .add-svg {
+            position: fixed;
+            margin-top: 30px;
+            left: 95%;
+            top: 4.1%;
+            cursor: pointer;
+        }
+
+        .fixed-sidebar {
+            position: fixed;
+            border: 1px solid black;
+            background-color: #E9E9E9AA;
+            display: flex;
+            left: 93%;
+            height: 100%;
+            width: 500px;
+            top: 0;
+        }
+
+        .insert-form {
+            position: fixed;
+            left: -800px;
+            width: 650px;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 0 0 32px rgba(0,0,0,0.5);
+            border: 1px solid #8d8d8d;
+
+        }
+
+        .button {
+            background-color: #1f38cd;
+            color: azure;
+            font-family: 'PT Bold Stars', sans-serif;
+            font-size: 17px;
+            font-weight: bold;
+            border-radius: 4px;
+
+            width: 250px;
+            padding: 3px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+
+            margin: 5px auto 20px;
+
+            position: relative;
+        }
+        .form-header {
+            font-family: Leelawadee, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 10px;
+            justify-content: center;
+            position: relative;
+        }
+        .error {
+            position: relative;
+            left: 5%;
+        }
+        .submission {
+            /*display: flex;*/
+            position: relative;
+            margin-top: 20px;
+            left: 30%;
+            /*justify-content: center;*/
+        }
+        input {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 550px;
+            height: 25px;
+            border-radius: 2px;
+            border: solid black 1px;
+        }
+        label, input {
+            position: relative;
+            left: 5%
+        }
+        label {
+            padding: 5px;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .actions-button {
+            display: inline-block;
+            padding-right: 10px;
+        }
+
+        #actions-col {
+            padding-right: 45px;
+        }
+
+        #update-button {
+            background-color: #0e52ce;
+        }
+
+        #delete-button {
+            background-color: red;
+        }
+
+        .action {
+            padding: 6px;
+            font-family: 'PT Bold Stars', sans-serif;
+            font-size: 17px;
+            border-radius: 4px;
+            width: 90px;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+
+        .drop-button {
+            background-color: #e9e9e9;
+            color: black;
+            padding-left: 20px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            font-size: 16px;
+            width: 100px;
+            cursor: pointer;
+            border: 1px solid black;
+            line-height: 30px;
+        }
+
+        .dropdown-subcontent a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #sortby-caret {
+            position: absolute;
+            left: 77%;
+            top: 32%;
+        }
+
+        .price-caret {
+            position: relative;
+            left: 6%;
+            top: 10%;
+        }
+
+        .category-caret {
+            position: relative;
+            left: 3%;
+        }
+
+        .dropdown {
+            position: absolute;
+            display: inline-block;
+            left: 10.2%;
+            top: 17.3%;
+            user-select: none;
+        }
+
+        .dropdown-item {
+            font-size: 20px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(74, 73, 73, 0.91);
+            z-index: 999;
+        }
+
+
+        .dropdown-content .dropdown-item {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /*.dropdown-content .dropdown-item:hover {*/
+        /*    background-color: #f1f1f1;*/
+        /*}*/
+
+        /*.dropdown:hover .dropdown-content {*/
+        /*    display: block;*/
+        /*}*/
+
+        .dropdown-subcontent {
+            display: none;
+            line-height: 55px;
+        }
+
+        /*.dropdown-item:hover .dropdown-subcontent {*/
+        /*    display: block;*/
+        /*}*/
+
+
+        .sub-item {
+            font-size: 16px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /*#category-dropdown-item:hover{*/
+        /*    min-height: 400px;*/
+        /*    min-width: 500px;*/
+        /*}*/
+
+        .dropdown-item-title {
+            font-weight: bold;
+        }
+
+        #sortby-title {
+            font-size: 20px;
+        }
+
+        .default-item {
+            text-decoration: none;
+            color: black;
+        }
+
+        .category-title {
+            position: absolute;
+            left: 20%;
+            top: 10%;
+            font-family: Leelawadee, sans-serif;
+            font-size: 30px;
+            font-weight: bolder;
+        }
+
+        .total-price-indicator {
+            position: fixed;
+            display: flex;
+            align-items: center;
+            max-width: 70px;
+            max-height: 50px;
+            margin-top: 25px;
+            left: 77%;
+        }
+        #total-price-header {
+            font-size: 28px;
+            font-family: Monospaced, sans-serif;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        #current-total {
+            font-weight: bold;
+            font-family: Monospaced, sans-serif;
+            font-size: 28px;
+        }
+
+    </style>
+
+    <style>
+
+        @media screen and (min-width: 2000px) {
+            .add-svg {
+                position: fixed;
+                margin-top: 30px;
+                left: 95%;
+                top: 2.9%;
+            }
+            table {
+                border-collapse: collapse;
+                margin-bottom: 400px;
+                position: relative;
+                left: 25%;
+                top: 200px;
+            }
+
+            .dropdown {
+                position: absolute;
+                left: 16%;
+                top: 16.4%;
+            }
+
+            .category-title {
+                top: 10.2%;
+                left: 35%;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="category-title"></div>
+
+<div class="total-price-indicator">
+    <h1 id="total-price-header">Total:</h1>
+    <p th:text="'$' + ${#numbers.formatDecimal(totalCategoryPrice, 0, 'DEFAULT', 2, 'POINT')}" id="current-total"></p>
+</div>
+
+<div class="dropdown">
+    <div class="drop-button"><span class="dropdown-item-title" id="sortby-title">Sort By</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="sortby-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></div>
+
+    <div class="dropdown-content">
+
+        <div class="dropdown-item"> <span class="dropdown-item-title"><a th:href="@{/}" class="default-item">Default</a></span>
+            <div class="dropdown-subcontent">
+            </div>
+        </div>
+
+        <div class="dropdown-item"> <span class="dropdown-item-title"><a th:href="@{/sortCategoryAlphabetically(category=${param.category})}" class="default-item">Part (A-Z)</a></span>
+            <div class="dropdown-subcontent">
+            </div>
+        </div>
+
+        <div class="dropdown-item" id="price-dropdown-item"> <span class="dropdown-item-title">Price</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="price-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+            <div class="dropdown-subcontent" id="price-sub-content">
+                <a th:href="@{/sortCategoryByPrice(category=${param.category}, sort='lowestToHighest')}" class="sub-item">Lowest to Highest</a>
+                <a th:href="@{/sortCategoryByPrice(category=${param.category}, sort='highestToLowest')}" class="sub-item">Highest to Lowest</a>
+            </div>
+        </div>
+
+        <div class="dropdown-item" id="category-dropdown-item" > <span class="dropdown-item-title">Category</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="category-caret" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+            <div class="dropdown-subcontent" id="category-sub-content">
+                <a th:each="category: ${categories}" th:text="${category}" class="sub-item" th:href="@{/category?categoryname={categoryName}(categoryName=${category})}"></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<form class="insert-form" action="http://localhost:8081/insert" method="POST" name="insertPartsForm">
+    <div class="form-header">
+        <h1>Add a New Part</h1>
+    </div>
+
+    <div class="close-form">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="close-button" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/></svg>
+    </div>
+
+    <div class="container">
+        <div class="fields">
+
+            <div class="input-field" id="partDes-field">
+                <label for="inputPartDes" class="input-label">Part Description</label>
+                <input type="input" id="inputPartDes" name="partdes" autocomplete="off">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-field" id="partPrice-field">
+                <label for="inputPartPrice" class="input-label">Price ($)</label>
+                <input type="input" id="inputPartPrice" name="price" autocomplete="off">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-field" id="partCategory-field">
+                <label for="inputPartCategory" class="input-label">Category</label>
+                <input list="input-Categories" id="inputPartCategory" name="category" autocomplete="off">
+
+                <datalist id="input-Categories">
+                    <option th:each="cat: ${categories}" th:value="${cat}"></option>
+                </datalist>
+
+                <div class="error"></div>
+            </div>
+
+            <div class="submission">
+                <button class="button" type="submit">Add Part</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+<div class="fixed-sidebar">
+    <div class="add-new-component-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="blue" class="add-svg" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/></svg>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Part Description</th>
+        <th>Price ($)</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="comp: ${sortedCategoryComponentsByPrice}">
+        <td th:text="${comp.partdes}">
+        <td th:text="'$ ' + ${#numbers.formatDecimal(comp.price, 0, 'DEFAULT', 2, 'POINT')}" ></td>
+
+        <td id="actions-col">
+            <div class="actions-buttons-fields">
+
+                <div class="actions-button">
+                    <a th:href="@{/edit?partid={partId}(partId=${comp.partid})}">
+                        <button class="action" type="button" id="update-button">Update</button>
+                    </a>
+                </div>
+
+                <div class="actions-button">
+                    <a th:href="@{/delete?partid={partId}(partId=${comp.partid})}">
+                        <button class="action" type="button" id="delete-button">Delete</button>
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    const addSPartIcon = document.querySelector(".add-new-component-button");
+    const closeButton = document.querySelector(".close-button");
+    let inView = false;
+
+    const insertForm = document.querySelector(".insert-form");
+
+    addSPartIcon.addEventListener('click', () => {
+        if(!inView)
+        {
+            insertForm.style.left = "32%";
+            insertForm.style.top = "30%";
+            insertForm.style.zIndex = "2";
+            insertForm.style.position = "fixed";
+            inView = true;
+        }
+    });
+
+    closeButton.addEventListener('click', () => {
+        if(inView)
+        {
+            insertForm.style.left = "-800px";
+            inView = false;
+            document.querySelector("#inputPartDes").value = '';
+            document.querySelector("#inputPartPrice").value = '';
+
+            resetFields();
+        }
+    });
+
+    function resetFields() {
+        partDesField.style.borderColor = "initial";
+        priceField.style.borderColor = "initial";
+        categoryField.style.borderColor = "initial";
+        const errorDivs = document.querySelectorAll('.error');
+
+        for(let i = 0; i < errorDivs.length; i++)
+        {
+            let errDiv = errorDivs[i];
+            errDiv.textContent = '';
+        }
+    }
+
+
+    insertForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if(validateInputs() === 3)
+        {
+            setTimeout(() => {
+                location.reload();
+            }, 200)
+        }
+    });
+
+
+    function setError(element, errorMessage) {
+        const parent = element.parentElement;
+        const errorDiv = parent.querySelector('.error');
+
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.color = "#f73d39";
+        element.style.borderColor = "#f73d39";
+        errorDiv.style.padding = "2px";
+
+    }
+
+
+    function setSuccess(element) {
+        const parent = element.parentElement;
+        const errorDiv = parent.querySelector('.error');
+
+        errorDiv.textContent = '';
+        element.style.borderColor = "#198754";
+        element.style.borderWidth = "3px";
+    }
+    const partDesField = document.querySelector("#inputPartDes");
+    const priceField = document.querySelector("#inputPartPrice");
+    const categoryField = document.querySelector("#inputPartCategory");
+    function validateInputs() {
+        let successCount = 0;
+        const regex = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+
+        let partValue = partDesField.value.trim();
+        let priceValue = priceField.value.trim();
+        let categoryValue = categoryField.value.trim();
+
+        if(partValue === '')
+        {
+            setError(partDesField, "You must enter a part description.");
+        }
+        else
+        {
+            setSuccess(partDesField);
+            successCount++;
+        }
+        if(priceValue === '')
+        {
+            setError(priceField, "You must enter a price.");
+        }
+        else if(!regex.test(priceValue))
+        {
+            setError(priceField, "Enter a valid price.");
+        }
+        else
+        {
+            setSuccess(priceField);
+            successCount++;
+        }
+        if(categoryValue === '')
+        {
+            setError(categoryField, "You must enter a category.");
+        }
+        else
+        {
+            setSuccess(categoryField);
+            successCount++;
+        }
+        if(successCount === 3)
+        {
+            console.log("successful submission to server");
+            const fd = new FormData(insertForm);
+            console.log(priceValue);
+            fetch('http://localhost:8081/insert', { method: 'POST', body: fd });
+
+        }
+        return successCount;
+    }
+
+
+    const categoryTitle = document.querySelector(".category-title");
+    let fullURL = window.location.href;
+
+    let queryString = fullURL.split('?')[1];
+    let queryStringValue = queryString.split('=')[1];
+
+    let decodedCategory = queryStringValue.replace(/%20/g, ' ');
+
+    let modified = "";
+    modified += decodedCategory[0].toUpperCase();
+    for(let i = 0; i < decodedCategory.length - 1; i++)
+    {
+
+        if(decodedCategory[i] === ' ')
+        {
+            modified += decodedCategory[i + 1].toUpperCase();
+        }
+        else
+        {
+            modified += decodedCategory[i + 1];
+        }
+
+    }
+
+    let corrected = modified.split('&')[0];
+    let sortMethod = queryString.split('&')[1].split('=')[1];
+
+    let sortHeader = "";
+    if(sortMethod === "lowestToHighest")
+    {
+        sortHeader = "Lowest to Highest"
+    }
+
+    else if(sortMethod === "highestToLowest")
+    {
+        sortHeader = "Highest to Lowest";
+    }
+
+    categoryTitle.textContent = "Sort By Price: " + corrected + " - " + sortHeader;
+
+    const catergoryInputField = document.querySelector("#inputPartCategory");
+    catergoryInputField.value = corrected;
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        let scrollpos = localStorage.getItem('scrollpos');
+        if (scrollpos) window.scrollTo(0, scrollpos);
+    });
+
+    window.onbeforeunload = function(e) {
+        localStorage.setItem('scrollpos', window.scrollY);
+    };
+
+    const dropdown = document.querySelector(".drop-button");
+    const dropdownContent = document.querySelector(".dropdown-content");
+    const categoryDropdown = document.querySelector("#category-dropdown-item");
+    const categorySubcontent = document.querySelector("#category-sub-content");
+    const priceDropdown = document.querySelector("#price-dropdown-item");
+    const priceSubcontent = document.querySelector("#price-sub-content");
+
+    let isDropdownVisible = false;
+    let isPriceDropdownVisible = false;
+    let isCategoryDropdownVisible = false;
+
+    dropdown.addEventListener("click", () => {
+
+        if(isDropdownVisible)
+        {
+            dropdownContent.style.display = "none";
+            priceSubcontent.style.display = "none";
+            categorySubcontent.style.display = "none";
+            categoryDropdown.style.minHeight = "0px";
+            categoryDropdown.style.minWidth = "0px";
+
+            isDropdownVisible = false;
+            isPriceDropdownVisible = false;
+            isCategoryDropdownVisible = false;
+        }
+
+        else
+        {
+            isDropdownVisible = true;
+            dropdownContent.style.display = "block";
+        }
+
+    });
+
+
+    priceDropdown.addEventListener('click', () => {
+
+        if(isPriceDropdownVisible)
+        {
+            priceSubcontent.style.display = "none";
+            isPriceDropdownVisible = false;
+        }
+        else
+        {
+            priceSubcontent.style.display = "block";
+            isPriceDropdownVisible = true;
+        }
+
+    });
+
+    categoryDropdown.addEventListener("click", () => {
+
+        if(isCategoryDropdownVisible)
+        {
+            categorySubcontent.style.display = "none";
+            categoryDropdown.style.minHeight = "0px";
+            categoryDropdown.style.minWidth = "0px";
+            isCategoryDropdownVisible = false;
+        }
+
+        else
+        {
+            categoryDropdown.style.minHeight = "400px";
+            categoryDropdown.style.minWidth = "500px";
+            categorySubcontent.style.display = "block";
+
+            isCategoryDropdownVisible = true;
+        }
+
+
+    });
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

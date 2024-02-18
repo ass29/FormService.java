@@ -1,0 +1,139 @@
+.sidebar {
+    position: fixed;
+    background-color: #eaeaea;
+    left: -400px;
+    top: 0;
+    border: 1px solid #202020;
+    transition-duration: 0.35s;
+}
+
+.enlarge-siderbar {
+    left: 60px;
+    position: absolute;
+    top: 10px;
+    transition-duration: 0.3s;
+}
+
+.title-svg {
+    position: absolute;
+    left: 1070px;
+}
+
+header {
+    font-size: 27px;
+    background-color: #232F3E;
+    color: white;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    line-height: 50px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid white;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+li {
+    margin-bottom: 13px;
+    margin-left: 0;
+    border-bottom: 1px solid black;
+    padding-left: 13px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+a {
+    color: #111111;
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+svg {
+    padding-right: 10px;
+}
+
+.field {
+    left: 1000px;
+    top: 500px;
+}
+
+/*****************************************************************************************************************************************************/
+
+#mainTitle {
+    font-family: "Leelawadee", serif;
+    font-size: 50px;
+    color: #1b1c26;
+}
+
+body {
+    background: linear-gradient(to right, #dbd8e9, #dbd9e7, #dcdbe5, #dcdce3, #dddde1, #dcdcdf, #dcdcdd, #dbdbdb, #d8d8d8, #d6d6d6, #d3d3d3, #d1d1d1);
+}
+.title {
+    margin-left: 500px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainTitle, .container {
+    margin-left: 100px;
+}
+
+#submission-handling {
+    margin-bottom: 15px;
+}
+
+.btn-class {
+    display: flex;
+    margin-top: 425px;
+    margin-left: 5px;
+}
+
+.form-control {
+    font-family: 'PT Bold Stars', sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #dfdfdf;
+
+    width: 150px;
+    padding: 3px;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+
+    margin: 5px 5px 20px auto;
+}
+
+#submitButton {
+    background-color: #28a745;
+}
+
+#addMoreData {
+    background-color: rgba(0, 0, 255, 0.8);
+}
+
+#mainTextBox {
+    width: 750px;
+    height: 450px;
+    background-color: #f7f2f2;
+    border: 2px solid rgba(0, 0, 0, 0.7);
+    resize: none;
+    font-family: "PT Bold Stars", sans-serif;
+
+}
+
+
+#mainTextBox::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+
+}
+
+
