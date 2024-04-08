@@ -17,7 +17,7 @@ public class SpringBootApp {
 
     static final String url = "jdbc:postgresql://localhost:5432/postgres";
     static final String user = "postgres";
-    static final String password = "Maklooba2003@!";
+    static final String password = "";
 
     static Connection conn;
 
